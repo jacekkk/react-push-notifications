@@ -31,6 +31,8 @@ const App = () => {
     })
     .catch((err) => console.log('failed: ', err))
 
+  // TODO update UI with background notification data
+
   return (
     <div className="App">
       <div>{token}</div>

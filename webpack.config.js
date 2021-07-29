@@ -1,6 +1,7 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
+const CopyPlugin = require('copy-webpack-plugin')
 
 const outputDirectory = 'dist'
 
@@ -45,6 +46,14 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './public/index.html',
       favicon: './public/favicon.ico',
+    }),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: 'firebase-messaging-sw.js',
+          to: 'firebase-messaging-sw.js',
+        },
+      ],
     }),
   ],
 }

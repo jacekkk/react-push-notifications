@@ -21,6 +21,7 @@ export const getToken = async () => {
         'BELC4msaJ4zbV7U9rqRDgt8dzsIVEA_sNrnDf9PRtplc4qfrwf2DVL2deHLOCHIoiFofFNLvu7B6LDhhTjklZMM',
     })
   } catch (e) {
+    console.log(e)
     throw new Error('Unable to get token')
   }
 }
