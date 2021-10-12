@@ -4,7 +4,10 @@ import { getToken, onMessageListener } from './firebase'
 const App = () => {
   const channel = new BroadcastChannel('firebase-messaging-sw')
   channel.addEventListener('message', (event) => {
-    const { title, body, image } = event.data.payload.notification
+    console.log('frontend message received', event)
+
+    const { title, body, image } = event.data?.payload?.data
+
     setNotification({
       title: title,
       body: body,
@@ -33,9 +36,9 @@ const App = () => {
   onMessageListener()
     .then((payload) => {
       setNotification({
-        title: payload.notification.title,
-        body: payload.notification.body,
-        image: payload.notification.image,
+        title: payload.data?.title,
+        body: payload.data?.body,
+        image: payload.data?.image,
       })
     })
     .catch((err) => console.log('failed: ', err))

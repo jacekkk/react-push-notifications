@@ -23,19 +23,64 @@ messaging.onBackgroundMessage((payload) => {
   console.log('Received background message ', payload)
   channel.postMessage({ payload })
 
-  // const notificationTitle = payload.notification.title
-  // const notificationOptions = {
-  //   body: payload.notification.body,
-  //   image: payload.notification.image,
-  // }
+  const notificationTitle = payload.data.title
+  const notificationOptions = {
+    body: payload.data.body,
+    image: payload.data.image,
+    tag: payload.data.image,
+  }
 
-  // return self.registration.showNotification(
-  //   notificationTitle,
-  //   notificationOptions
+  return self.registration.showNotification(
+    notificationTitle,
+    notificationOptions
+  )
+})
+
+self.addEventListener('notificationclick', function (e) {
+  console.log('EVENT', e)
+
+  e.notification.close()
+
+  let url = e.notification.tag
+  clients.openWindow(url)
+
+  // e.waitUntil(
+  //   clients
+  //     .matchAll({ includeUncontrolled: true, type: 'window' })
+  //     .then(function (clients) {
+  //       for (var i = 0; i < clients.length; i++) {
+  //         var client = clients[i]
+  //         // If so, just focus it.
+  //         if (client.url === url && 'focus' in client) {
+  //           return client.focus()
+  //         }
+  //       }
+
+  //       // If not, then open the target URL in a new window/tab.
+  //       if (clients.openWindow) {
+  //         return clients.openWindow(url)
+  //       }
+  //     })
   // )
 })
 
-// self.addEventListener('notificationclick', (event) => {
-//   console.log('clickevent', event)
-//   return event
+// self.addEventListener('notificationclick', function (event) {
+//   console.log('event in onclick', event)
+
+//   let url = 'https://pieski-frontend.herokuapp.com'
+//   event.notification.close() // Android needs explicit close.
+
+//   // self.clients.matchAll({ includeUncontrolled: true }).then(function (clients) {
+//   //   console.log(clients)
+//   //   //you can see your main window client in this list.
+//   //   clients.forEach(function (client) {
+//   //     client.postMessage('YOUR_MESSAGE_HERE')
+//   //   })
+//   // })
+
+// event.waitUntil(
+//   clients.matchAll({ includeUncontrolled: true }).then((windowClients) => {
+//     // Check if there is already a window/tab open with the target URL
+//   })
+// )
 // })

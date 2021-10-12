@@ -7,15 +7,14 @@ const sendNotificationToClient = async (tokens) => {
       'https://scppq3ck96.execute-api.eu-west-2.amazonaws.com/dev/image/random'
     )
 
-    const notificationData = {
-      notification: {
+    return await admin.messaging().sendMulticast({
+      data: {
         title: 'Good boy',
         body: 'Specially selected for you!',
         image: data.url,
       },
-    }
-
-    return await admin.messaging().sendToDevice(tokens, notificationData)
+      tokens,
+    })
   } catch (error) {
     console.log('error', error)
     throw error
