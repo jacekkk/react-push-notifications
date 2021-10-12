@@ -2,6 +2,16 @@ import React, { useState, useEffect } from 'react'
 import { getToken, onMessageListener } from './firebase'
 
 const App = () => {
+  const channel = new BroadcastChannel('firebase-messaging-sw')
+  channel.addEventListener('message', (event) => {
+    const { title, body, image } = event.data.payload.notification
+    setNotification({
+      title: title,
+      body: body,
+      image: image,
+    })
+  })
+
   const [token, setToken] = useState(null)
   const [notification, setNotification] = useState({
     title: '',
@@ -27,11 +37,8 @@ const App = () => {
         body: payload.notification.body,
         image: payload.notification.image,
       })
-      console.log(payload)
     })
     .catch((err) => console.log('failed: ', err))
-
-  // TODO update UI with background notification data
 
   return (
     <div className="App">

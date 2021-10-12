@@ -17,15 +17,25 @@ firebase.initializeApp(firebaseConfig)
 
 // Retrieve firebase messaging
 const messaging = firebase.messaging()
+const channel = new BroadcastChannel('firebase-messaging-sw')
 
-messaging.onBackgroundMessage(function (payload) {
+messaging.onBackgroundMessage((payload) => {
   console.log('Received background message ', payload)
+  channel.postMessage({ payload })
 
-  const notificationTitle = payload.notification.title
-  const notificationOptions = {
-    body: payload.notification.body,
-    image: payload.notification.image,
-  }
+  // const notificationTitle = payload.notification.title
+  // const notificationOptions = {
+  //   body: payload.notification.body,
+  //   image: payload.notification.image,
+  // }
 
-  self.registration.showNotification(notificationTitle, notificationOptions)
+  // return self.registration.showNotification(
+  //   notificationTitle,
+  //   notificationOptions
+  // )
 })
+
+// self.addEventListener('notificationclick', (event) => {
+//   console.log('clickevent', event)
+//   return event
+// })
