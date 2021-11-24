@@ -2,8 +2,7 @@ const { sendNotificationToClient } = require('../services')
 
 const addMessage = async (req, res) => {
   try {
-    const { tokens } = req.body
-    const response = await sendNotificationToClient(tokens)
+    const response = await sendNotificationToClient()
 
     res.status(200).json({ response })
   } catch (error) {

@@ -1,11 +1,14 @@
 const admin = require('firebase-admin')
 const axios = require('axios')
+const { getRegisteredTokens } = require('./users')
 
-const sendNotificationToClient = async (tokens) => {
+const sendNotificationToClient = async () => {
   try {
     const { data } = await axios.get(
       'https://scppq3ck96.execute-api.eu-west-2.amazonaws.com/dev/image/random'
     )
+
+    const tokens = await getRegisteredTokens()
 
     return await admin.messaging().sendMulticast({
       data: {
@@ -16,7 +19,7 @@ const sendNotificationToClient = async (tokens) => {
       tokens,
     })
   } catch (error) {
-    console.log('error', error)
+    console.log('error while sending notification', error)
     throw error
   }
 }
