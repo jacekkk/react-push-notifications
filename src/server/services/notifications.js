@@ -1,12 +1,10 @@
 const admin = require('firebase-admin')
-const axios = require('axios')
 const { getRegisteredTokens } = require('./users')
+const { getRandomImage } = require('./storage')
 
 const sendNotificationToClient = async () => {
   try {
-    const { data } = await axios.get(
-      'https://scppq3ck96.execute-api.eu-west-2.amazonaws.com/dev/image/random'
-    )
+    const imageUrl = await getRandomImage()
 
     const tokens = await getRegisteredTokens()
 
@@ -14,7 +12,7 @@ const sendNotificationToClient = async () => {
       data: {
         title: 'Good boy',
         body: 'Specially selected for you!',
-        image: data.url,
+        image: imageUrl,
       },
       tokens,
     })

@@ -30,5 +30,6 @@ app.listen(process.env.PORT || 8080, () => {
     credential: admin.credential.cert(serviceAccount),
     databaseURL:
       'https://pieski-67739-default-rtdb.europe-west1.firebasedatabase.app',
+    storageBucket: 'gs://pieski-67739.appspot.com',
   })
 })
